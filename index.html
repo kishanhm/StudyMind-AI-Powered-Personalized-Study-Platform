@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyMind — Behavior-Driven Study Planner</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+<div class="noise"></div>
+<div class="grid-lines"></div>
+ 
+<div class="page-wrap">
+ 
+<nav>
+    <div class="logo">Study<em>Mind</em></div>
+
+    <div class="nav-right">
+
+        <div class="nav-stat-bar">
+            <div class="ns">
+                <span class="ns-n" id="ns-streak">0</span>
+                <span class="ns-l">Day Streak</span>
+            </div>
+
+            <div class="ns-div"></div>
+
+            <div class="ns">
+                <span class="ns-n" id="ns-score">0%</span>
+                <span class="ns-l">Focus Score</span>
+            </div>
+
+            <div class="ns-div"></div>
+
+            <div class="ns">
+                <span class="ns-n" id="ns-tasks">0</span>
+                <span class="ns-l">Tasks Done</span>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <!-- Profile Button -->
+        <button class="profile-btn" onclick="toggleProfile()">
+            Profile
+        </button>
+
+<!-- Logout Button -->
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+</nav>
+<!-- PROFILE CARD -->
+<div class="profile-card" id="profile-card">
+
+    <div class="profile-card-header">
+        <div>
+            <div class="profile-title">Profile</div>
+            <div class="profile-email" id="profile-email">—</div>
+        </div>
+
+        <button class="profile-close" onclick="toggleProfile()">×</button>
+    </div>
+
+    <div class="profile-details">
+
+        <div class="profile-field">
+            <span>Name</span>
+            <strong id="profile-name">—</strong>
+        </div>
+
+        <div class="profile-field">
+            <span>Age</span>
+            <strong id="profile-age">—</strong>
+        </div>
+
+        <div class="profile-field">
+            <span>Gender</span>
+            <strong id="profile-gender">—</strong>
+        </div>
+
+        <div class="profile-field">
+            <span>Email</span>
+            <strong id="profile-email-detail">—</strong>
+        </div>
+
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <div class="profile-stats">
+
+        <div>
+            <strong id="profile-streak">0</strong>
+            <span>Day Streak</span>
+        </div>
+
+        <div>
+            <strong id="profile-tasks">0</strong>
+            <span>Tasks Done</span>
+        </div>
+
+        <div>
+            <strong id="profile-goal">0</strong>
+            <span>Daily Goal</span>
+        </div>
+
+        <div>
+            <strong id="profile-focus">0</strong>
+            <span>Focus Duration</span>
+        </div>
+
+    </div>
+
+    <button class="edit-profile-btn" onclick="openEditProfile()">
+        Edit Profile
+    </button>
+
+</div>
+<!-- EDIT PROFILE -->
+<div class="edit-profile-card" id="edit-profile-card">
+
+    <div class="edit-profile-header">
+        <div>
+            <div class="edit-profile-title">Edit Profile</div>
+            <div class="edit-profile-subtitle">
+                Update your personal details
+            </div>
+        </div>
+
+        <button class="profile-close" onclick="closeEditProfile()">×</button>
+    </div>
+
+    <div class="edit-profile-form">
+
+        <div class="edit-field">
+            <label>Name</label>
+            <input
+                type="text"
+                id="edit-name"
+                placeholder="Enter your name"
+            >
+        </div>
+
+        <div class="edit-field">
+            <label>Age</label>
+            <input
+                type="number"
+                id="edit-age"
+                min="1"
+                max="100"
+                placeholder="Enter your age"
+            >
+        </div>
+
+        <div class="edit-field">
+            <label>Gender</label>
+
+            <select id="edit-gender">
+                <option value="">Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+
+        <div class="edit-field">
+            <label>Email</label>
+            <input
+                type="email"
+                id="edit-email"
+                disabled
+            >
+        </div>
+
+    </div>
+
+    <button class="save-profile-btn" onclick="saveEditedProfile()">
+        Save Changes
+    </button>
+
+</div>
+
+ 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag"><span class="tag-dot"></span>Adaptive &middot; Predictive &middot; Intelligent</div>
+    <h1>Study smarter,<br>not <em>harder</em></h1>
+    <p class="hero-sub">StudyMind learns your energy patterns, predicts your peak performance windows, and uses A* search to schedule tasks when you are most productive — so every study session counts.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollToSection('#onboard')">Begin Assessment &rarr;</button>
+      <button class="btn-outline" onclick="scrollToSection('#how')">How it works</button>
+      <button class="btn-outline" onclick="scrollToSection('#planner')">View Planner</button>
+    </div>
+    <div class="prediction-chips">
+      <div class="chip"><div class="chip-dot green"></div>Peak focus at <strong>9–11 AM</strong></div>
+      <div class="chip"><div class="chip-dot amber"></div>Low energy <strong>2–4 PM</strong></div>
+      <div class="chip"><div class="chip-dot blue"></div>Second wind <strong>7–9 PM</strong></div>
+    </div>
+  </section>
+ 
+  <!-- ONBOARDING -->
+  <section class="onboard-section" id="onboard">
+    <div class="section-tag">Step 01 — Behavioral Profile</div>
+    <h2>Tell us about your habits</h2>
+    <p class="section-sub">We use your answers to build a personalized energy model. The more honest you are, the better our predictions.</p>
+ 
+    <div class="onboard-grid">
+ 
+      <div class="onboard-card" id="oc-sleep">
+        <div class="oc-label">When do you usually wake up?</div>
+        <div class="oc-options" id="wake-opts">
+          <button class="oc-btn active" data-val="5" onclick="pick(this,'wake')">Before 6 AM</button>
+          <button class="oc-btn" data-val="7" onclick="pick(this,'wake')">6–8 AM</button>
+          <button class="oc-btn" data-val="9" onclick="pick(this,'wake')">8–10 AM</button>
+          <button class="oc-btn" data-val="11" onclick="pick(this,'wake')">After 10 AM</button>
+        </div>
+      </div>
+ 
+      <div class="onboard-card" id="oc-type">
+        <div class="oc-label">Which best describes you?</div>
+        <div class="oc-options" id="type-opts">
+          <button class="oc-btn active" data-val="morning" onclick="pick(this,'type')">Morning person</button>
+          <button class="oc-btn" data-val="evening" onclick="pick(this,'type')">Night owl</button>
+          <button class="oc-btn" data-val="balanced" onclick="pick(this,'type')">Balanced</button>
+        </div>
+      </div>
+ 
+      <div class="onboard-card" id="oc-focus">
+        <div class="oc-label">How long can you focus without a break?</div>
+        <div class="oc-options" id="focus-opts">
+          <button class="oc-btn" data-val="25" onclick="pick(this,'focus')">25 min</button>
+          <button class="oc-btn active" data-val="45" onclick="pick(this,'focus')">45 min</button>
+          <button class="oc-btn" data-val="60" onclick="pick(this,'focus')">60 min</button>
+          <button class="oc-btn" data-val="90" onclick="pick(this,'focus')">90+ min</button>
+        </div>
+      </div>
+ 
+      <div class="onboard-card" id="oc-goal">
+        <div class="oc-label">Daily study goal (hours)</div>
+        <div class="slider-wrap">
+          <input type="range" min="1" max="10" value="4" step="0.5" id="goal-slider" oninput="updateGoal(this.value)">
+          <div class="slider-readout"><span id="goal-val">4</span> hrs / day</div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <button class="btn-primary btn-center" onclick="buildProfile()">Generate My Energy Profile &rarr;</button>
+  </section>
+ 
+  <!-- ENERGY PROFILE -->
+  <section class="profile-section" id="profile" style="display:none">
+    <div class="section-tag">Step 02 — Your Energy Model</div>
+    <h2>Your predicted productivity curve</h2>
+    <p class="section-sub">Based on your behavioral profile, here's when your brain performs best throughout the day.</p>
+ 
+    <div class="profile-dashboard">
+ 
+      <div class="energy-chart-wrap">
+        <div class="chart-header">
+          <div class="chart-title">Daily Energy Forecast</div>
+          <div class="chart-legend">
+            <span class="leg-item"><span class="leg-dot green"></span>High focus</span>
+            <span class="leg-item"><span class="leg-dot amber"></span>Moderate</span>
+            <span class="leg-item"><span class="leg-dot red"></span>Low energy</span>
+          </div>
+        </div>
+        <div class="energy-chart" id="energy-chart"></div>
+        <div class="chart-x-labels" id="chart-xlabels"></div>
+      </div>
+ 
+      <div class="profile-stats">
+        <div class="pstat">
+          <div class="pstat-icon-svg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="var(--green)" stroke-width="1.4" fill="none"/></svg>
+          </div>
+          <div class="pstat-body">
+            <div class="pstat-label">Peak Focus Window</div>
+            <div class="pstat-val" id="peak-window">—</div>
+          </div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-icon-svg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--amber)" stroke-width="1.4"/><path d="M10 6v4l3 2" stroke="var(--amber)" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="pstat-body">
+            <div class="pstat-label">Avoid Heavy Tasks</div>
+            <div class="pstat-val" id="avoid-window">—</div>
+          </div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-icon-svg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4v12" stroke="var(--green)" stroke-width="1.4" stroke-linecap="round"/><circle cx="10" cy="10" r="7" stroke="var(--green)" stroke-width="1.4"/></svg>
+          </div>
+          <div class="pstat-body">
+            <div class="pstat-label">Optimal Block Length</div>
+            <div class="pstat-val" id="opt-block">—</div>
+          </div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-icon-svg">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="var(--blue)" stroke-width="1.4"/><path d="M7 2v4M13 2v4M3 9h14" stroke="var(--blue)" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="pstat-body">
+            <div class="pstat-label">Recommended Sessions</div>
+            <div class="pstat-val" id="rec-sessions">—</div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <button class="btn-primary btn-center" onclick="goToPlanner()">Build My Schedule &rarr;</button>
+  </section>
+ 
+  <!-- TASK MANAGER / PLANNER -->
+  <section class="planner-section" id="planner">
+    <div class="section-tag">Step 03 — Smart Planner</div>
+    <h2>Your A*-scheduled study plan</h2>
+ 
+    <div class="planner-layout">
+ 
+      <!-- ADD TASK -->
+      <div class="task-form-panel">
+        <div class="panel-title">Add a Subject / Task</div>
+        <div class="form-group">
+          <label>Subject name</label>
+          <input type="text" id="task-name" placeholder="e.g. Calculus, History Essay…" />
+        </div>
+        <div class="form-group">
+          <label>Difficulty</label>
+          <div class="seg-ctrl" id="diff-ctrl">
+            <button class="seg-btn active" data-val="easy">Easy</button>
+            <button class="seg-btn" data-val="medium">Medium</button>
+            <button class="seg-btn" data-val="hard">Hard</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hours needed</label>
+          <input type="range" min="0.5" max="8" step="0.5" value="2" id="hours-slider" oninput="document.getElementById('hours-out').textContent=this.value">
+          <div class="range-out"><span id="hours-out">2</span> hours</div>
+        </div>
+        <div class="form-group">
+          <label>Deadline</label>
+          <input type="date" id="task-deadline" />
+        </div>
+        <div class="form-group">
+          <label>Priority</label>
+          <div class="seg-ctrl" id="pri-ctrl">
+            <button class="seg-btn active" data-val="normal">Normal</button>
+            <button class="seg-btn" data-val="high">High</button>
+            <button class="seg-btn" data-val="critical">Critical</button>
+          </div>
+        </div>
+        <button class="btn-primary full-width" onclick="addTask()">+ Add &amp; Auto-Schedule</button>
+      </div>
+ 
+      <!-- SCHEDULE VIEW -->
+      <div class="schedule-panel">
+        <div class="panel-title-row">
+          <div class="panel-title">Today's Smart Schedule</div>
+          <div class="sched-date" id="sched-date"></div>
+        </div>
+        <div class="astar-badge">A* optimised scheduling active</div>
+        <div class="schedule-list" id="schedule-list">
+          <div class="sched-empty">
+            <div class="empty-icon-svg">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="26" rx="4" stroke="var(--text-dim)" stroke-width="1.5"/><path d="M13 4v8M27 4v8M6 18h28" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round"/><path d="M14 26h12M14 22h8" stroke="var(--text-dim)" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="empty-text">Add subjects above to see your A*-generated schedule</div>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <!-- BEHAVIOR ANALYTICS -->
+  <section class="analytics-section" id="analytics">
+    <div class="section-tag">Live Analytics</div>
+    <h2>Behavior prediction insights</h2>
+ 
+    <div class="analytics-grid">
+ 
+      <div class="analytics-card ac-wide">
+        <div class="ac-title">Weekly Focus Heat Map</div>
+        <div class="heatmap-wrap" id="heatmap"></div>
+        <div class="heatmap-legend">
+          <span>Less</span>
+          <div class="hm-cells">
+            <div class="hm-cell" style="opacity:0.1"></div>
+            <div class="hm-cell" style="opacity:0.3"></div>
+            <div class="hm-cell" style="opacity:0.5"></div>
+            <div class="hm-cell" style="opacity:0.75"></div>
+            <div class="hm-cell" style="opacity:1"></div>
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+ 
+      <div class="analytics-card">
+        <div class="ac-title">Productivity by Hour</div>
+        <div class="mini-bar-chart" id="hourly-chart"></div>
+      </div>
+ 
+      <div class="analytics-card">
+        <div class="ac-title">Subject Distribution</div>
+        <div class="donut-wrap" id="donut-chart">
+          <svg viewBox="0 0 120 120" id="donut-svg">
+            <circle cx="60" cy="60" r="40" fill="none" stroke="#1e1e2e" stroke-width="20"/>
+            <text x="60" y="64" text-anchor="middle" class="donut-label" id="donut-center">No data</text>
+          </svg>
+          <div class="donut-legend" id="donut-legend"></div>
+        </div>
+      </div>
+ 
+      <div class="analytics-card">
+        <div class="ac-title">Prediction Accuracy</div>
+        <div class="accuracy-meter" id="accuracy-meter">
+          <div class="meter-ring">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#1e1e2e" stroke-width="10"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="var(--green)" stroke-width="10"
+                stroke-dasharray="239" stroke-dashoffset="239" stroke-linecap="round"
+                transform="rotate(-90 50 50)" id="acc-ring" style="transition:stroke-dashoffset 1.2s ease"/>
+            </svg>
+            <div class="meter-val" id="acc-val">0%</div>
+          </div>
+          <div class="acc-label">Behavior model confidence</div>
+          <div class="acc-detail" id="acc-detail">Complete the profile to unlock</div>
+        </div>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <!-- HOW IT WORKS -->
+  <section class="how-section" id="how">
+    <div class="section-tag">The Algorithm</div>
+    <h2>How behavior prediction works</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-body">
+          <div class="how-title">Circadian profiling</div>
+          <div class="how-desc">Your wake time and chronotype are mapped to a circadian rhythm model. We calculate your cortisol peak window (alertness), post-lunch dip, and second-wind window with biological precision.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-body">
+          <div class="how-title">Ultradian rhythm modeling</div>
+          <div class="how-desc">The brain naturally cycles through 90–120 minute rest-activity rhythms. StudyMind aligns your session blocks with these cycles to maximise retention and minimise fatigue.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-body">
+          <div class="how-title">A* optimal scheduling</div>
+          <div class="how-desc">Tasks are assigned to time slots using the A* search algorithm. Each state represents a partial schedule; g(n) accumulates mismatch penalties, and h(n) lower-bounds the remaining cost. The globally optimal assignment is found efficiently via a min-heap priority queue.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">04</div>
+        <div class="how-body">
+          <div class="how-title">Cognitive load matching</div>
+          <div class="how-desc">The A* cost function penalises hard tasks in low-energy slots and wastes of peak windows on easy tasks. Critical tasks carry a time-preference penalty so they are placed as early as possible in the day.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">05</div>
+        <div class="how-body">
+          <div class="how-title">Adaptive rescheduling</div>
+          <div class="how-desc">As you check off sessions and log completion quality, the model updates your energy curve. A* is re-run on every change so your schedule is always globally optimal, not just locally greedy.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <strong>StudyMind</strong> — Behavior-Driven Study Planner &nbsp;&middot;&nbsp; AI &amp; ML Mini Project<br>
+    <span>Circadian Modeling &middot; Ultradian Rhythms &middot; A* Optimal Scheduling</span>
+  </footer>
+ 
+</div>
+ 
+
+<script>
+    self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+</script>
+
+<!-- ==============================
+     STUDYMIND AI ASSISTANT
+     ============================== -->
+
+<button id="ai-assistant-btn">
+    AI✦
+</button>
+
+<!-- ==============================
+     STUDYMIND AI CHAT
+     ============================== -->
+
+<div id="ai-chat">
+
+    <!-- HEADER -->
+    <div class="ai-chat-header">
+
+        <div class="ai-title">
+            <strong>StudyMind AI</strong>
+            <span>Your personal study assistant</span>
+        </div>
+
+        <div class="ai-header-actions">
+
+            <button id="ai-new-chat">
+                New Chat
+            </button>
+
+            <button id="ai-close">
+                ×
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+    <div id="ai-messages">
+
+        <div class="ai-message">
+            Hi! I'm your StudyMind AI assistant.
+            Ask me anything about your studies.
+        </div>
+
+    </div>
+
+
+    <!-- INPUT -->
+    <div class="ai-input-area">
+
+        <input
+            type="text"
+            id="ai-input"
+            placeholder="Ask StudyMind AI..."
+        >
+
+        <button id="ai-send">
+            Send
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- Existing scripts -->
+
+<script type="module" src="authGuard.js"></script>
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
